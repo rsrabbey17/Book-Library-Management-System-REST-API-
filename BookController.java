@@ -22,7 +22,7 @@ public class BookController {
     public ResponseEntity<Book> addBook(@RequestBody Book book){
         try{
             Book savedBook = bookRepository.save(book);
-            return ResponseEntity.status(HttpStatus.CREATED).body(savedBook); // 201 Created
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedBook); 
         }catch(Exception e){
             return ResponseEntity.badRequest().build();
         }
@@ -35,7 +35,7 @@ public class BookController {
         return ResponseEntity.ok(books);
     }
 
-    // 3. GET: get a specific book by ID - ✅ FIXED!
+    // 3. GET: get a specific book by ID 
     @GetMapping("/{id}")
     public ResponseEntity<Book> getBookById(@PathVariable Long id){
         Optional<Book> book = bookRepository.findById(id);
@@ -74,18 +74,18 @@ public class BookController {
                 .orElse(ResponseEntity.notFound().build());
     }
 
-    // 5. DELETE: remove a book from library - ✅ FIXED!
+    // 5. DELETE: remove a book from library 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id){
         if(bookRepository.existsById(id)){
             bookRepository.deleteById(id);
-            return ResponseEntity.noContent().build(); // 204 No Content
+            return ResponseEntity.noContent().build(); // 
         }else{
             return ResponseEntity.notFound().build();
         }
     }
 
-    // 6. GET: find all books by a specific author - ✅ FIXED PATH!
+    // 6. GET: find all books by a specific author 
     @GetMapping("/author/{authorName}")
     public ResponseEntity<List<Book>> getBooksByAuthorName(@PathVariable String authorName){
         List<Book> books = bookRepository.findByAuthorContainingIgnoreCase(authorName);
@@ -112,4 +112,5 @@ public class BookController {
         List<Book> books = bookRepository.findByTitleContainingIgnoreCase(title);
         return ResponseEntity.ok(books);
     }
+
 }
